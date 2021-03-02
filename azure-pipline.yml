@@ -1,0 +1,96 @@
+trigger:
+  branches:
+    include:
+    - master
+    - uat
+    - sit
+    - develop
+pool:
+  vmImage: ubuntu-latest
+variables:
+- name: AppName
+  value: BigProject-Ecommerce-FE
+- name: ZipName
+  value: BigProject-Ecommerce-FE
+jobs:
+  - job: SetupEnviroment
+    condition: and(in(variables['Build.SourceBranchName'], 'develop','sit','uat','master'), in(variables['Build.Reason'], 'IndividualCI', 'Manual'))
+    steps:
+    - task: Bash@3
+      displayName: Set ENV Variable
+      condition: eq(variables['Build.SourceBranchName'], 'develop')
+      inputs:
+        targetType: inline
+        script: >
+          # Write your commands here
+           echo "##vso[task.setvariable variable=ENV]Dev"
+    - task: Bash@3
+      displayName: Install AWS CLI
+      name: InstallAWSCLI
+      inputs:
+        targetType: inline
+        script: |
+          # Write your commands here
+          sudo pip install --upgrade pip
+          #pip install awscli --upgrade --user
+          sudo pip install awscli --upgrade
+          export PATH="/home/vsts/.local/bin:$PATH"
+          echo "##vso[task.setvariable variable=STAGE;isOutput=true]$(ENV)"
+    - task: Bash@3
+      inputs:
+        targetType: inline
+        script: |
+          # Use the environment variables input below to pass secret variables to this script
+          aws configure set aws_access_key_id $(AWS_ACCESS_KEY_DEV)
+          aws configure set aws_secret_access_key $(AWS_SECRET_KEY_DEV)
+          aws configure set default.region $(AWS_REGION)
+          echo "##vso[task.setvariable variable=ACCOUNT]$(AWS_ACCOUNT_DEV)"
+      displayName: Configure AWS CLI for DEV / SIT
+      condition: in(variables['Build.SourceBranchName'], 'develop','sit')
+  - job: DeployCode
+    dependsOn:
+    - SetupEnviroment
+    variables:
+    - name: STAGE
+      value: $[ dependencies.SetupEnviroment.outputs['InstallAWSCLI.STAGE'] ]
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: 10.x
+        checkLatest: true
+      displayName: Intall NodeJS
+    - task: Npm@1
+      inputs:
+        command: install
+        verbose: true
+    - task: Bash@3
+      displayName: Build project
+      inputs:
+        targetType: inline
+        script: >
+          npm run build
+    - task: Bash@3
+      displayName: Show file directory
+      inputs:
+        targetType: inline
+        script: |
+          ls /home/vsts/work/1/s/build
+    - task: Bash@3
+      inputs:
+        targetType: inline
+        script: |
+          # Use the environment variables input below to pass secret variables to this script
+          aws configure set aws_access_key_id $(AWS_ACCESS_KEY_DEV)
+          aws configure set aws_secret_access_key $(AWS_SECRET_KEY_DEV)
+          aws configure set default.region $(AWS_REGION)
+          echo "##vso[task.setvariable variable=ACCOUNT]$(AWS_ACCOUNT_DEV)"
+      displayName: Configure AWS CLI for DEV / SIT
+      condition: in(variables['Build.SourceBranchName'], 'develop','sit')
+    - task: S3Upload@1
+      inputs:
+        regionName: 'ap-southeast-1'
+        bucketName: 'bigproject-ecommerce'
+        sourceFolder: '/home/vsts/work/1/s/build'
+        filesAcl: 'bucket-owner-full-control'
+        createBucket: true
+      displayName: 'Upload Publish file to S3'
