@@ -40,7 +40,7 @@ namespace eShopSolution.Repository.Implement
             }
         }
 
-        public async Task<TEntity> DeleteAsync(TEntity entity)
+        public async Task DeleteAsync(TEntity entity)
         {
             if (entity == null)
             {
@@ -51,8 +51,6 @@ namespace eShopSolution.Repository.Implement
             {
                 _context.Remove(entity);
                 await _context.SaveChangesAsync();
-
-                return entity;
             }
             catch (Exception ex)
             {

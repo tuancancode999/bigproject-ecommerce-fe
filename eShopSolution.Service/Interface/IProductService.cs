@@ -13,7 +13,7 @@ namespace eShopSolution.Service.Interface
 
         Task<Product> UpdateProductAsync(ProductEditRequest request);
 
-        Task<Product> DeleteProductAsync(Product product);
+        Task  DeleteProductAsync(Product product);
 
         IEnumerable<Product> GetAllProductAsync();
 

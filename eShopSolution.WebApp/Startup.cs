@@ -1,6 +1,7 @@
 
 using AutoMapper;
 using eShopSolution.Data.EF;
+using eShopSolution.Data.Entities;
 using eShopSolution.Repository;
 using eShopSolution.Repository.Implement;
 using eShopSolution.Repository.Interface;
@@ -44,7 +45,7 @@ namespace eShopSolution.WebApp
 
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IProductRepository, ProductRepository>();
-          
+            services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<EShopDBContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,12 +64,18 @@ namespace eShopSolution.WebApp
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseAuthentication();
             app.UseRouting();
 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+
+                endpoints.MapControllerRoute(
+                    name: "Admin",
+                    pattern: "Admin/{controller=Auth}/{action=Login}/{id?}");
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

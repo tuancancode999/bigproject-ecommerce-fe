@@ -1,6 +1,7 @@
 ﻿using eShopSolution.Data.EF;
 using eShopSolution.Service.Interface;
 using eShopSolution.ViewModels.Request;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace eShopSolution.WebApp.Controllers
 {
+    [Authorize]
     public class ProductController : Controller
     {
 

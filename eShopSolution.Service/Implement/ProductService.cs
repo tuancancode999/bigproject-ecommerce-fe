@@ -37,9 +37,9 @@ namespace eShopSolution.Service.Implement
             return await _productRepository.UpdateAsync(product);
         }
 
-        public async Task<Product> DeleteProductAsync(Product product)
+        public  Task DeleteProductAsync(Product product)
         {
-            return await _productRepository.DeleteAsync(product);
+            return  _productRepository.DeleteAsync(product);
         }
 
         public IEnumerable<Product> GetAllProductAsync()

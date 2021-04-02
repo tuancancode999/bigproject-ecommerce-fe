@@ -1,6 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@model eShopSolution.ViewModels.Request.UserLoginRequest
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout1Admin.cshtml";
@@ -16,18 +17,18 @@
                     </a>
                 </div>
                 <div class="login-form">
-                    <form asp-action="Login" asp-controller="Home" method="post">
+                    <form asp-action="Login" asp-controller="Auth" method="post">
                         <div class="form-group">
                             <label>User Name</label>
-                            <input class="au-input au-input--full"  type="text" name="Emi" placeholder="UserName">
+                            <input class="au-input au-input--full" asp-for="Email" type="text" name="Email" placeholder="UserName">
                         </div>
                         <div class="form-group">
                             <label>Password</label>
-                            <input class="au-input au-input--full" type="password" name="Password" placeholder="Password">
+                            <input class="au-input au-input--full" asp-for="Password" type="password" name="Password" placeholder="Password">
                         </div>
                         <div class="login-checkbox">
                             <label>
-                                <input type="checkbox"  name="remember">Remember Me
+                                <input type="checkbox" name="remember">Remember Me
                             </label>
                             <label>
                                 <a href="#">Forgotten Password?</a>

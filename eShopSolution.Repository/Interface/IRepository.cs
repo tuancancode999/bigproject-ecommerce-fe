@@ -15,6 +15,6 @@ namespace eShopSolution.Repository.Interface
 
         Task<TEntity> UpdateAsync(TEntity entity);
 
-        Task<TEntity> DeleteAsync(TEntity entity);
+        Task DeleteAsync(TEntity entity);
     }
 }
