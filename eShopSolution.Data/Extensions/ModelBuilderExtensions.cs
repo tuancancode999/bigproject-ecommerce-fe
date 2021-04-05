@@ -37,7 +37,7 @@ namespace eShopSolution.Data.Extensions
                      Name = "Samsung Note 10+",
                      LanguageId = "vi",
                      SeoAlias = "Samsung Note 10+",
-                     SeoDescription = "Samsung Note 10+",
+                    
                      SeoTitle = "Samsung Note 10+ new ",
                      Details = "Samsung Note 10+ new",
                      Description = "Samsung Note 10+ đên với camera 48MP"
@@ -49,7 +49,7 @@ namespace eShopSolution.Data.Extensions
                         Name = "Samsung Note 10+",
                         LanguageId = "en",
                         SeoAlias = "Samsung-Note-10+",
-                        SeoDescription = "Samsung-Note-10+",
+                       
                         SeoTitle = "Samsung-Note-10+",
                         Details = "Samsung-Note-10+",
                         Description = "Samsung-Note-10+"

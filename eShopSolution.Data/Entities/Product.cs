@@ -1,20 +1,20 @@
-﻿using System;
+﻿using eShopSolution.Data.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace eShopSolution.Data.Entities
 {
-    public class Product
+    public class Product : IEntity
     {
         public int Id { get; set; }
-        public string Introduce { set; get; }
         public decimal Price { get; set; }
         public decimal OriginalPrice { set; get; }
         public int Stock { set; get; }
         public int ViewCount { set; get; }
        
         public DateTime DateCreated { set; get; }
-        public string SeoAlias { set; get; }
+       
 
         public List<ProductInCategory> ProductInCategories { get; set; }
 

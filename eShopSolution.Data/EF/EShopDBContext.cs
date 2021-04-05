@@ -12,14 +12,17 @@ namespace eShopSolution.Data.EF
 {
     public class EShopDBContext : IdentityDbContext<AppUser,AppRole,Guid>
     {
+        private readonly DbContextOptions _options;
         public EShopDBContext( DbContextOptions options) : base(options)
         {
-           
+            _options = options;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure using Fluent API
+
+            base.OnModelCreating(modelBuilder); 
 
             modelBuilder.ApplyConfiguration(new AppConfigConfigurations());
             modelBuilder.ApplyConfiguration(new CategoryConfigurations());

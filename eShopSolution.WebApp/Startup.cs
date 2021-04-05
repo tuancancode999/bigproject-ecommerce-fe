@@ -1,6 +1,19 @@
+
+using AutoMapper;
+using eShopSolution.Data.EF;
+using eShopSolution.Data.Entities;
+using eShopSolution.Repository;
+using eShopSolution.Repository.Implement;
+using eShopSolution.Repository.Interface;
+using eShopSolution.Service;
+using eShopSolution.Service.Implement;
+using eShopSolution.Service.Interface;
+using eShopSolution.Utilities.AutoMapper;
+using eShopSolution.Utilities.Constants;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,6 +37,15 @@ namespace eShopSolution.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddDbContext<EShopDBContext>(options =>
+            options.UseMySql(Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
+
+            services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
+
+            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<EShopDBContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,12 +64,18 @@ namespace eShopSolution.WebApp
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseAuthentication();
             app.UseRouting();
 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+
+                endpoints.MapControllerRoute(
+                    name: "Admin",
+                    pattern: "Admin/{controller=Auth}/{action=Login}/{id?}");
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
