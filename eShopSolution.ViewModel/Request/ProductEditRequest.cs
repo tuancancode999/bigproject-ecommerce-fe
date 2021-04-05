@@ -1,22 +1,22 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using eShopSolution.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace eShopSolution.ViewModels.Request
 {
-    public class ProductEditRequest
+    public class ProductEditRequest 
     {
         public int Id { get; set; }
-        public string Name { set; get; }
-        public string Description { set; get; }
-        public string Details { set; get; }
-        public string SeoDescription { set; get; }
-        public string SeoTitle { set; get; }
+        public int CategoryId { get; set; }
+        public int ManufacturerId { get; set; }
+        public string NameProduct { get; set; }
+        public string Description { get; set; }
+        public string Image { get; set; }
+        public int Cost { get; set; }
+        public Status Status { get; set; }
+        public DateTime CreateAt { get; set; }
+        public DateTime UpdateAt { get; set; }
 
-        public string SeoAlias { get; set; }
-        public string LanguageId { set; get; }
-
-        public IFormFile ThumbnailImage { get; set; }
     }
 }

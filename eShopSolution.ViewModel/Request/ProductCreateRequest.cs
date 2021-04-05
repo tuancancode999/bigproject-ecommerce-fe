@@ -1,28 +1,21 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using eShopSolution.Data.Enums;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace eShopSolution.ViewModels.Request
 {
     public class ProductCreateRequest
     {
-        public decimal Price { set; get; }
-        public decimal OriginalPrice { set; get; }
-        public int Stock { set; get; }
-
-        [Required(ErrorMessage = "Bạn phải nhập tên sản phẩm")]
-        public string Name { set; get; }
-
-        public string Description { set; get; }
-        public string Details { set; get; }
-        public string SeoDescription { set; get; }
-        public string SeoTitle { set; get; }
-
-        public string SeoAlias { get; set; }
-        public string LanguageId { set; get; }
-
-        public IFormFile ThumbnailImage { get; set; }
+        public int Id { get; set; }
+        public int CategoryId { get; set; }
+        public int ManufacturerId { get; set; }
+        public string NameProduct { get; set; }
+        public string Description { get; set; }
+        public string Image { get; set; }
+        public decimal Cost { get; set; }
+        public Status Status { get; set; }
+        public DateTime CreateAt { get; set; }
+        public DateTime UpdateAt { get; set; }
     }
 }

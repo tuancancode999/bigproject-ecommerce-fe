@@ -14,9 +14,14 @@ namespace eShopSolution.Data.Configurations
             builder.ToTable("Promotions");
 
             builder.HasKey(x => x.Id);
+
             builder.Property(x => x.Id).UseIdentityColumn();
 
-            builder.Property(x => x.Name).IsRequired();
+            builder.Property(x => x.Title).IsRequired().HasMaxLength(1000);
+
+            builder.Property(x => x.Value).IsRequired();
+
+           
         }
     }
 }

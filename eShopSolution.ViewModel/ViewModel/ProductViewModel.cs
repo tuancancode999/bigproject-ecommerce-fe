@@ -1,28 +1,19 @@
-﻿using System;
+﻿using eShopSolution.Data.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace eShopSolution.ViewModels.ViewModel
 {
-    public class ProductViewModel
+   public class ProductViewModel
     {
+        public string BearerToken;
+
         public int Id { get; set; }
-        public string Introduce { set; get; }
-        public decimal Price { get; set; }
-        public decimal OriginalPrice { set; get; }
-        public int Stock { set; get; }
-        public int ViewCount { set; get; }
-
-        public DateTime DateCreated { set; get; }
-      
-
-        public string Name { set; get; }
-        public string Description { set; get; }
-        public string Details { set; get; }
-        public string SeoDescription { set; get; }
-        public string SeoTitle { set; get; }
-
-        public string SeoAlias { get; set; }
-        public string LanguageId { set; get; }
+        public string NameProduct { get; set; }
+        public string Description { get; set; }
+        public string Image { get; set; }
+        public decimal Cost { get; set; }
+        public Status Status { get; set; }
     }
 }
