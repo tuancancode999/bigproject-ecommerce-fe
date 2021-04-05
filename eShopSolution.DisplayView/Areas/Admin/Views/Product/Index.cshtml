@@ -1,0 +1,169 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IEnumerable<eShopSolution.Data.Entities.Product>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!-- MAIN CONTENT-->
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- DATA TABLE -->
+                    <h3 class="title-5 m-b-35">data table</h3>
+                    <div class="table-data__tool">
+                        <div class="table-data__tool-left">
+                            <form class="form-header" asp-area="Admin" asp-controller="Product" asp-action="Search" method="get">
+                                <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
+                                <button class="au-btn--submit" type="submit">
+                                    <i class="zmdi zmdi-search"></i>
+                                </button>
+                            </form>
+                        </div>
+                        <div class="table-data__tool-right">
+                            <a asp-area="Admin" asp-controller="Product" asp-action="Create">
+                                <button class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                    <i class="zmdi zmdi-plus">add item</i>
+                                </button>
+                            </a>
+                            <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
+                                <select class="js-select2" name="type">
+                                    <option selected="selected">Export</option>
+                                    <option value="">Option 1</option>
+                                    <option value="">Option 2</option>
+                                </select>
+                                <div class="dropDownSelect2"></div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="table-responsive table-responsive-data2">
+                    <table class="table table-data2">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Hình ảnh</th>
+                                <th>Giá</th>
+                                <th>Trạng thái</th>
+                                <th>Ngày tạo</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr class="tr-shadow">
+                                    <td> @Html.DisplayFor(modelItem => item.Id)</td>
+                                    <td> @Html.DisplayFor(modelItem => item.NameProduct)</td>
+                                    <td><img class="image" id="imgPre" src="~/Admin/images/Product/@Url.Content(item.Image)" style='width: 150px; height: 150px'></td>
+                                    <td> @Html.DisplayFor(modelItem => item.Cost)</td>
+                                    <td> @Html.DisplayFor(modelItem => item.Status)</td>
+                                    <td> @Html.DisplayFor(modelItem => item.CreateAt)</td>
+                                    <td>
+                                        <div class="table-data-feature">
+
+                                            <a asp-area="Admin" asp-controller="Product" asp-action="Edit" asp-route-id="@item.Id">
+                                                <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                    <i class="zmdi zmdi-edit"></i>
+                                                </button>
+                                            </a>
+                                            <a asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-id="@item.Id">
+                                                <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                    <i class="zmdi zmdi-delete"></i>
+                                                </button>
+                                            </a>
+
+                                            <a asp-area="Admin" asp-controller="Manufacturer" asp-action="Detail" asp-route-id="@item.Id">
+                                                <button class="item" data-toggle="tooltip" data-placement="top" title="More">
+                                                    <i class="zmdi zmdi-more"></i>
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <ul class="pagination">
+                        @{
+                            int numberPage = ViewBag.numberPage;
+                            int pageCurrent = ViewBag.pageCurrent;
+                            int offset = 2;//number display page
+
+
+                            //config FirstLink
+                            if (pageCurrent > 1)
+                            {
+                                int prevPage = pageCurrent - 1;
+                                var PrevLink = new Dictionary<string, string> { { "page", prevPage.ToString() } };
+                                <li><a asp-controller="Product" asp-action="Index" asp-all-route-data="PrevLink">Prev Link</a></li>
+                            }
+
+                            int from = pageCurrent - offset;
+                            int to = pageCurrent + offset;
+                            if (from <= 0)
+                            {
+                                from = 1;
+                                to = offset * 2;
+                            }
+
+
+                            if (to > numberPage)
+                            {
+                                to = numberPage;
+                            }
+
+                            int i;
+                            for (i = from; i <= to; i++)
+                            {
+                                var parms = new Dictionary<string, string>
+                                    {
+                        { "page",i.ToString()}
+                    };
+                                if (pageCurrent == i)
+                                {
+                                    <li class="active"><a asp-controller="Product" asp-action="Index" asp-all-route-data="parms">@i</a></li>
+                                }
+                                else
+                                {
+                                    <li><a asp-controller="Product" asp-action="Index" asp-all-route-data="parms">@i</a></li>
+                                }
+
+                            }
+
+                            if (pageCurrent < numberPage - (to / 2))
+                            {
+                                <li><a>...</a></li>
+                                var LastLink = new Dictionary<string, string> { { "page", numberPage.ToString() } };
+                                <li><a asp-controller="Product" asp-action="Index" asp-all-route-data="LastLink">Last Link</a></li>
+                            }
+
+                            if (pageCurrent < numberPage)
+                            {
+                                int nextPage = pageCurrent + 1;
+                                var NextLink = new Dictionary<string, string> { { "page", nextPage.ToString() } };
+                                <li><a asp-controller="Product" asp-action="Index" asp-all-route-data="NextLink">Next Link</a></li>
+                            }
+                        }
+                    </ul>
+
+                </div>
+                    <!-- END DATA TABLE -->
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="copyright">
+                        <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

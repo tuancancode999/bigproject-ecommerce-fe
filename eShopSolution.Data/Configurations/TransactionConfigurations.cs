@@ -8,9 +8,9 @@ using System.Transactions;
 
 namespace eShopSolution.Data.Configurations
 {
-    public class TransactionConfigurations : IEntityTypeConfiguration<Entities.Transaction>
-    {
-        public void Configure(EntityTypeBuilder<Entities.Transaction> builder)
+    public class TransactionConfigurations : IEntityTypeConfiguration<Transactions>
+    { 
+        public void Configure(EntityTypeBuilder<Transactions> builder)
         {
             builder.ToTable("Transactions");
 
@@ -18,7 +18,17 @@ namespace eShopSolution.Data.Configurations
 
             builder.Property(x => x.Id).UseIdentityColumn();
 
+            builder.Property(x => x.UserId).IsRequired();
+
+            builder.Property(x => x.Amount).IsRequired();
+
+            builder.Property(x => x.Payment).IsRequired().HasMaxLength(600);
+
+            builder.Property(x => x.PaymentInfo).IsRequired().HasMaxLength(600);
+
             builder.HasOne(x => x.AppUser).WithMany(x => x.Transactions).HasForeignKey(x => x.UserId);
+
+            builder.HasOne(x => x.Order).WithMany(x => x.Transactions).HasForeignKey(x => x.OrderId);
         }
     }
 }

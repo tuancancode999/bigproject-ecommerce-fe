@@ -1,5 +1,4 @@
 ﻿using eShopSolution.Data.Entities;
-using eShopSolution.Data.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -18,8 +17,11 @@ namespace eShopSolution.Data.Configurations
 
             builder.Property(x => x.Id).UseIdentityColumn();
 
+            builder.Property(x => x.CategoryName).IsRequired().HasMaxLength(500);
+            
+            builder.Property(x => x.Image).IsRequired().HasMaxLength(500);
 
-            builder.Property(x => x.Status).HasDefaultValue(Status.Active);
+
         }
     }
 }

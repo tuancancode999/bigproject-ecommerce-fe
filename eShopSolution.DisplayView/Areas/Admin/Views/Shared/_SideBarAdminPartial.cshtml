@@ -1,0 +1,85 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<!-- MENU SIDEBAR-->
+<aside class="menu-sidebar d-none d-lg-block">
+    <div class="logo">
+        <a href="#">
+            <img src="~/Admin/images/icon/logo.png" alt="Cool Admin" />
+        </a>
+    </div>
+    <div class="menu-sidebar__content js-scrollbar1">
+        <nav class="navbar-sidebar">
+            <ul class="list-unstyled navbar__list">
+                <li class="active has-sub">
+                    <a asp-area="Admin" asp-controller="Home" asp-action="Index">
+                        <i class="fas fa-tachometer-alt"></i>Dashboard
+                    </a>
+                </li>
+                <li >
+                    <a class="js-arrow" href="#">
+                        <i class="fa fa-briefcase"></i>Data Management
+                    </a>
+                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+
+                        <li>
+                            <a asp-area="Admin" asp-controller="AppUser" asp-action="Index"><i class="fa fa-certificate" aria-hidden="true"></i>User</i></a>
+                        </li>
+                        <li>
+                            <a asp-area="Admin" asp-controller="AppRole" asp-action="Index"><i class="fa fa-certificate" aria-hidden="true"></i>Role</i></a>
+                        </li>
+                        <li>
+                            <a asp-area="Admin" asp-controller="Category" asp-action="Index"><i class="fa fa-certificate" aria-hidden="true"></i>Category</i></a>
+                        </li>
+                        <li>
+                            <a asp-area="Admin" asp-controller="Product" asp-action="Index"><i class="fa fa-certificate" aria-hidden="true"></i>Product </i></a>
+                        </li>
+
+                        <li>
+                            <a asp-area="Admin" asp-controller="FeatBack" asp-action="Index"><i class="fa fa-certificate" aria-hidden="true"></i>Feat Back</i></a>
+                        </li>
+
+                        <li>
+                            <a asp-area="Admin" asp-controller="Promotion" asp-action="Index"><i class="fa fa-certificate" aria-hidden="true"></i>Promotion</i></a>
+                        </li>
+                        <li>
+                            <a asp-area="Admin" asp-controller="Size" asp-action="Index"><i class="fa fa-certificate" aria-hidden="true"></i> Sizes</i></a>
+                        </li>
+                        <li>
+                            <a asp-area="Admin" asp-controller="Manufacturer" asp-action="Index"><i class="fa fa-certificate" aria-hidden="true"></i>Manufacturer</i></a>
+                        </li>
+                        <li>
+                            <a asp-area="Admin" asp-controller="Order" asp-action="Index"><i class="fa fa-certificate" aria-hidden="true"></i>Order</i></a>
+                        </li>
+
+                        <li>
+                            <a asp-area="Admin" asp-controller="Transaction" asp-action="Index"><i class="fa fa-certificate" aria-hidden="true"></i> Transaction</i></a>
+                        </li>
+                        <li>
+                            <a asp-area="Admin" asp-controller="AppRole" asp-action="Index"><i class="fa fa-certificate" aria-hidden="true"></i> Role</i></a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a asp-area="Admin" asp-controller="Notification" asp-action="Index">
+                        <i class="fa fa-bell"></i>Notification
+                    </a>
+                </li>
+                <li>
+                    <a href="table.html">
+                        <i class="fas fa-user"></i>Account
+                    </a>
+                </li>
+                <li>
+                    <a href="table.html">
+                        <i class="fas fa-chart-bar"></i>Statistical
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+    </div>
+</aside>
+<!-- END MENU SIDEBAR-->
