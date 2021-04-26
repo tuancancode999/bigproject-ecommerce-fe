@@ -1,0 +1,67 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model eShopSolution.Data.Entities.Promotion
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<!-- MAIN CONTENT-->
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <a asp-area="Admin" asp-action="Index" asp-controller="Manufacturer"><button class='btn btn-dark' style='margin:0 0 15px 20px'>Quay lại</button></a>
+            <form asp-action="Edit" asp-controller="Promotion" enctype="multipart/form-data">
+                <div class='form-create'>
+                    <div class='row'>
+                        <div class='col-sm-8'>
+                            <div class='row'>
+                                <div class='col-sm-6'>
+                                    <div class='form-group'>
+                                        <label><h4>Tiêu đề của khuyến mãi :</h4></label>
+                                        <input type="text" class='form-control' asp-for="Title" required>
+                                    </div>
+                                </div>
+                                <div class='col-sm-6'>
+                                    <div class='form-group'>
+                                        <label><h4>Giá trị của khuyến mãi :</h4></label>
+                                        <input type="text" class='form-control' asp-for="Value" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='row'>
+                                <div class='col-sm-6'>
+                                    <label><h4>Ngày bắt đầu :</h4></label>
+                                    <input type="text" class='form-control' asp-for="StartDay" required>
+                                </div>
+                                <div class='col-sm-6'>
+                                    <label><h4>Ngày kết thúc :</h4></label>
+                                    <input type="text" class='form-control' asp-for="EndDay" required>
+                                </div>
+                            </div>
+                            <div class='row'>
+                                <div class='col-sm-6'>
+                                    <label><h4>Trạng thái :</h4></label>
+                                    <select class='form-control' asp-for="Status">
+                                        <option value="1">Active</option>
+                                        <option value="0">InActive</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='col-sm-4'>
+                            <div class='form-group'>
+                                <img id="imgPre" src="~/Admin/images/BANNER-KHUYEN-MAI-GIAM-GIA.png" alt="Ảnh đại diện" id='img_Create_MonAn' name='img_Create_MonAn' style='width: 100%; height: 300px'>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class='hr'></div>
+                    <button type='submit' class='btn btn-primary' style='width: 100%'>Edit Promotion</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

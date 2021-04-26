@@ -1,5 +1,6 @@
-﻿using eShopSolution.Data.Entities;
+﻿using eShopSolution.ViewModels.Common;
 using eShopSolution.ViewModels.Request;
+using eShopSolution.ViewModels.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,8 +10,10 @@ namespace eShopSolution.Service.Interface
 {
    public interface IUserService
     {
-        Task Login(UserLoginRequest request);
+        Task<string> Authenticate(LoginRequest request);
 
-        Task Register(UserRegisterRequest request);
+        Task<bool> Register(RegisterRequest request);
+
+        
     }
 }

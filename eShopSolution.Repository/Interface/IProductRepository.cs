@@ -9,6 +9,5 @@ namespace eShopSolution.Repository.Interface
     public interface IProductRepository : IRepository<Product>
     {
         Task<Product> GetProductByIdAsync(int id);
-     
     }
 }

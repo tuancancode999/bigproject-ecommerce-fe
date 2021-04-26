@@ -1,0 +1,175 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model eShopSolution.Data.Entities.Product
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<!-- MAIN CONTENT-->
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <a asp-area="Admin" asp-action="Index" asp-controller="Manufacturer"><button class='btn btn-dark' style='margin:0 0 15px 20px'>Quay lại</button></a>
+            <form asp-action="Edit" asp-controller="Product" enctype="multipart/form-data">
+                <div class='form-create'>
+                    <div class='row'>
+                        <div class='col-sm-8'>
+                            <div class='row'>
+                                <input type="hidden" class='form-control' asp-for="Id" required>
+                                <div class='col-sm-6'>
+                                    <div class='form-group'>
+                                        <label><h4>Tên sản phẩm :</h4></label>
+                                        <input readonly type="text" class='form-control' asp-for="NameProduct" required>
+                                    </div>
+                                </div>
+                                @foreach (var x in ViewBag.list)
+                                {
+                                    <div class='col-sm-6'>
+                                        <div class='form-group'>
+                                            <label><h4>Loại sản phẩm :</h4></label>
+
+                                            <input readonly type="text" class='form-control' value="@x.GetType().GetProperty("CategoryName").GetValue(x, null)" required>
+
+                                        </div>
+                                    </div>
+                                 }
+                                </div>
+                            <div class='row'>
+                                @foreach (var x in ViewBag.list)
+                                {
+                                    <div class='col-sm-6'>
+                                        <label><h4>Nhà cung cấp :</h4></label>
+                                        <input readonly type="text" class='form-control' value="@x.GetType().GetProperty("ManufactureName").GetValue(x, null)" required>
+                                    </div>
+                                }
+
+                                <div class='col-sm-6'>
+                                    <label><h4>Giá :</h4></label>
+                                    <input readonly type="text" class='form-control' asp-for="Cost" required>
+                                </div>
+                            </div>
+                            <div class='row'>
+                                <div class='col-sm-6'>
+                                    <label><h4>Trạng thái :</h4></label>
+                                    <input readonly type="text" class='form-control' asp-for="Status" required>
+                                </div>
+                                <div class='col-sm-6'>
+                                    <label><h4>Hình sản phẩm :</h4></label>
+                                    <input readonly type="text" class='form-control' asp-for="Image" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='col-sm-4'>
+                            <div class='form-group'>
+                                <label for="img_Create_MonAn"><h4>Hình ảnh sản phẩm :</h4></label>
+                               
+                                    <img id="imgPre" src="~/Admin/images/Product/@Html.DisplayFor(model => model.Image)" alt="Ảnh đại diện" id='img_Create_MonAn' name='img_Create_MonAn' style='width: 100%; height: 300px'>
+                               
+                                   
+                                </div>
+                        </div>
+
+                    </div>
+                    <div class='row'>
+                        <div class='col-sm-12'>
+                            <label><h4>Mô tả sản phẩm :</h4></label>
+                            <textarea cols="30" id="editor" rows="11" class='form-control' asp-for="Description" required></textarea>
+
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class='hr'></div>
+                    
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+    <script>
+        function readURL(input, idImg) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $(idImg).attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]); // convert to base64 string
+            }
+        }
+
+        $("#ful").change(function () {
+            readURL(this, '#imgPre');
+        });
+    </script>
+
+
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'), {
+
+                toolbar: {
+                    items: [
+                        'heading',
+                        '|',
+                        'bold',
+                        'italic',
+                        'link',
+                        'bulletedList',
+                        'numberedList',
+                        '|',
+                        'indent',
+                        'outdent',
+                        '|',
+                        'imageUpload',
+                        'blockQuote',
+                        'insertTable',
+                        'mediaEmbed',
+                        'undo',
+                        'redo'
+                    ]
+                },
+                language: 'en',
+                image: {
+                    toolbar: [
+                        'imageTextAlternative',
+                        'imageStyle:full',
+                        'imageStyle:side'
+                    ]
+                },
+                table: {
+                    contentToolbar: [
+                        'tableColumn',
+                        'tableRow',
+                        'mergeTableCells'
+                    ]
+                },
+                licenseKey: '',
+
+            })
+            .then(editor => {
+                window.editor = editor;
+
+
+
+
+
+
+
+
+            })
+            .catch(error => {
+                console.error('Oops, something went wrong!');
+                console.error('Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:');
+                console.warn('Build id: cu1qudh25bkr-8o65j7c6blw0');
+                console.error(error);
+            });</script>
+}
+

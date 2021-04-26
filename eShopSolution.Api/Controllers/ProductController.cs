@@ -1,6 +1,6 @@
-﻿
-using eShopSolution.Data.EF;
-using eShopSolution.Data.Entities;
+﻿using eShopSolution.Service.Interface;
+using eShopSolution.ViewModels.Request;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,93 +10,94 @@ using System.Threading.Tasks;
 
 namespace eShopSolution.Api.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductController : ControllerBase
     {
-        private readonly IProductApplication _productApplication;
-        private readonly EShopDBContext _context;
-        public ProductController(EShopDBContext context, IProductApplication productApplication)
-        {
-            _productApplication = productApplication;
-            _context = context;
 
+        private readonly IProductService _productService;
+        public ProductController(IProductService productService)
+        {
+            _productService = productService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProduct(int page = 0, int pageSize = 5)
+        public IActionResult GetAllProduct()
         {
-            var model = await _productApplication.SelectAll<Product>();
-            return model;
+            var products = _productService.GetAllProductAsync();
+            return Ok(products);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<IActionResult> EditByIdProduct(int id)
         {
-            var model = await _productApplication.SelectById<Product>(id);
-
-            if (model == null)
-            {
-                return NotFound();
-            }
-
-            return model;
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProduct(int id, Product model)
-        {
-            if (id != model.Id)
+            if (id == null)
             {
                 return BadRequest();
             }
 
-            await _productApplication.UpdateAsync<Product>(model);
-
-            return NoContent();
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<Product>> InsertProduct(ProductCreateRequest request)
-        {
-            var product = new Product()
+            var Data = await _productService.GetProductByIdAsync(id);
+            if (Data == null)
             {
-                Price = request.Price,
-                OriginalPrice = request.OriginalPrice,
-                Stock = request.Stock,
-                ViewCount = 0,
-                DateCreated = DateTime.Now,
-                ProductTranslations = new List<ProductTranslation>()
-                {
-                    new ProductTranslation()
-                    {
-                        Name = request.Name,
-                        Description = request.Description,
-                        Details = request.Details,
-                        SeoTitle = request.SeoTitle,
-                        SeoAlias = request.SeoAlias,
-                        LanguageId = "vi"
-                    }
-                }
-            };
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
-            return product;
+                return BadRequest();
+            }
+            return Ok(Data);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Product>> DeleteProduct(int id)
-        {
-            var model = await _productApplication.SelectById<Product>(id);
 
-            if (model == null)
+        [HttpPost("CreateProduct")]
+        public async Task<IActionResult> CreateProduct([FromBody] ProductCreateRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var result = await _productService.AddProductAsync(request);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            return BadRequest();
+        }
+
+        [HttpDelete("Id")]
+        public async Task<IActionResult> DeleteProduct(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var Data = await _productService.GetProductByIdAsync(id);
+            if (Data != null)
+            {
+                await _productService.DeleteProductAsync(Data);
+                return Ok();
+            }
+            if (Data == null)
             {
                 return NotFound();
             }
 
-            await _productApplication.DeleteAsync<Product>(model);
-
-            return model;
+            return BadRequest();
         }
+
+
+        [HttpPut("{id}")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> EditProduct([FromRoute]  int id, [FromForm] ProductEditRequest request)
+        {
+            if (id != request.Id)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                 await _productService.UpdateProductAsync(request);
+                return Ok();     
+            }
+            return BadRequest();
+        }
+
     }
 }

@@ -13,8 +13,12 @@ namespace eShopSolution.Data.Configurations
         {
             builder.ToTable("AppUsers");
 
-            builder.Property(x => x.DisplayName).IsRequired().HasMaxLength(255);
 
+            builder.Property(x => x.FirstName).HasMaxLength(255);
+            
+            builder.Property(x => x.DisplayName).HasMaxLength(255);
+
+            builder.Property(x => x.Address).HasMaxLength(1000);
         }
     }
 }
