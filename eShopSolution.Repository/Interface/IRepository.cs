@@ -1,4 +1,5 @@
-﻿using eShopSolution.Data.Enums;
+﻿using eShopSolution.Data.Entities;
+using eShopSolution.ViewModels.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;

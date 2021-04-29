@@ -11,16 +11,12 @@ namespace eShopSolution.Repository.Implement
 {
     public class ProductRepository : Repository<Product>, IProductRepository
     {
-        public ProductRepository(EShopDBContext eShopDBContext) : base(eShopDBContext)
+        public ProductRepository(EShopSolutionDBContext EShopSolutionDBContext) : base(EShopSolutionDBContext)
         {
         }
-
         public Task<Product> GetProductByIdAsync(int id)
         {
             return GetAll().FirstOrDefaultAsync(x => x.Id == id);
         }
-
-
-  
     }
 }

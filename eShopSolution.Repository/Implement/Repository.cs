@@ -1,6 +1,5 @@
 ﻿using eShopSolution.Data.EF;
 using eShopSolution.Repository.Interface;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +11,12 @@ namespace eShopSolution.Repository.Implement
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, new()
     {
 
-        protected readonly EShopDBContext _context;
+        protected readonly EShopSolutionDBContext _context;
 
-        public Repository (EShopDBContext context)
+        public Repository(EShopSolutionDBContext context)
         {
             _context = context;
         }
-
 
         public async Task<TEntity> AddAsync(TEntity entity)
         {
@@ -70,7 +68,7 @@ namespace eShopSolution.Repository.Implement
             }
         }
 
-       
+
 
         public async Task<TEntity> UpdateAsync(TEntity entity)
         {

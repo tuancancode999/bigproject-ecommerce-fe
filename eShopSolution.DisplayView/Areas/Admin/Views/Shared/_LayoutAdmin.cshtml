@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    @await Html.PartialAsync("_HeadAdminPartial.cshtml")
+    @RenderSection("css", required: false)
+</head>
+
+<body class="animsition">
+    <div class="page-wrapper">
+        <!-- Header -->
+        @await Html.PartialAsync("_HeaderAdminPartial.cshtml")
+        <!-- SideBar -->
+        @await Html.PartialAsync("_SideBarAdminPartial.cshtml")
+
+        <!-- PageContainer -->
+        @await Html.PartialAsync("_PageContainerAdminPartial.cshtml")
+        <!-- MAIN CONTENT-->
+        @RenderBody()
+
+    </div>
+
+    <!--Script-->
+    @await Html.PartialAsync("_ScriptAdminPartial.cshtml")
+    @RenderSection("Scripts", required: false)
+
+</body>
+
+</html>
+<!-- end document-->

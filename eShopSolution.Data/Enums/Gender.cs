@@ -4,9 +4,9 @@ using System.Text;
 
 namespace eShopSolution.Data.Enums
 {
-    public enum Gender
+   public enum Gender
     {
-        Male,
-        Female
+        Female,
+        Male
     }
 }

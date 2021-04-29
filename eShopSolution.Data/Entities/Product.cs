@@ -5,27 +5,34 @@ using System.Text;
 
 namespace eShopSolution.Data.Entities
 {
-    public class Product : IEntity
+    public class Product
     {
         public int Id { get; set; }
-        public decimal Price { get; set; }
-        public decimal OriginalPrice { set; get; }
-        public int Stock { set; get; }
-        public int ViewCount { set; get; }
-       
-        public DateTime DateCreated { set; get; }
-       
-
-        public List<ProductInCategory> ProductInCategories { get; set; }
-
-        public List<OrderDetail> OrderDetails { get; set; }
+        public int CategoryId { get; set; }
+        public int ManufacturerId { get; set; }
+        public string NameProduct { get; set; }
+        public string Description { get; set; }
+        public string Image { get; set; }
+        public int Cost { get; set; }
+        public Status Status { get; set; }
+        public DateTime CreateAt { get; set; }
+        public DateTime UpdateAt { get; set; }
 
         public List<Cart> Carts { get; set; }
 
-        public List<ProductTranslation> ProductTranslations { get; set; }
+        public List<Image> Images { get; set; }
 
-        public List<ProductImage> ProductImages { get; set; }
+        public List<OrderDetail> OrderDetails { get; set; }
 
+        public List<FeatBack> FeatBacks { get; set; }
 
+        public Category Category { get; set; }
+
+        public Manufacturer Manufacturer { get; set; }
+
+        public static implicit operator int(Product v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

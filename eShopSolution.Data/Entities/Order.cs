@@ -5,19 +5,20 @@ using System.Text;
 
 namespace eShopSolution.Data.Entities
 {
-   public class Order
+    public class Order
     {
-        public int Id { set; get; }
-        public DateTime OrderDate { set; get; }
-        public Guid UserId { set; get; }
-        public string ShipName { set; get; }
-        public string ShipAddress { set; get; }
-        public string ShipEmail { set; get; }
-        public string ShipPhoneNumber { set; get; }
-        public OrderStatus Status { set; get; }
+        public int Id { get; set; }
+        public Guid UserId { get; set; }
+        public int OrderStatusId { get; set; }
+        public int TotalMonney { get; set; }
+        public DateTime DateOfPurchare { get; set; }
+        public Status Status { get; set; }
+      
+        public AppUser AppUser{ get; set; }
+        public OrderStatus OrderStatus { get; set; }
 
         public List<OrderDetail> OrderDetails { get; set; }
 
-        public AppUser AppUser { get; set; }
+        public List<Transactions> Transactions { get; set; }
     }
 }

@@ -7,13 +7,19 @@ using System.Text;
 
 namespace eShopSolution.Data.Configurations
 {
-    public class OrderDetailConfigurations : IEntityTypeConfiguration<OrderDetail>
+    public class OrderDetailconfigurations : IEntityTypeConfiguration<OrderDetail>
     {
         public void Configure(EntityTypeBuilder<OrderDetail> builder)
         {
             builder.ToTable("OrderDetails");
 
-            builder.HasKey(x => new { x.OrderId, x.ProductId });
+            builder.HasKey(x => x.Id);
+
+            builder.Property(x => x.Id).UseIdentityColumn();
+
+            builder.Property(x => x.OrderId).IsRequired();
+
+            builder.Property(x => x.ProductId).IsRequired();
 
             builder.HasOne(x => x.Order).WithMany(x => x.OrderDetails).HasForeignKey(x => x.OrderId);
 
